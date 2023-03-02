@@ -1,17 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <YjjHahaha/>
+    <School :age="age"/>
+    <button @click="change">改变</button>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import YjjHahaha from './components/YjjHahaha.vue'
+import School from './components/School.vue'
 
-export default {
+export default {     
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    YjjHahaha,
+    School
+  },
+  data(){
+    return{
+      age:18
+    }
+  },
+  methods:{
+    change(){
+      this.age++
+    }
   }
 }
 </script>
