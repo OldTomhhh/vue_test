@@ -1,12 +1,13 @@
 <template>
   <div id="app">
+    <YjjButton @tap="dianji" type="default"/>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <YjjHahaha/>
     <School :age="age"/>
     <button @click="change">改变</button>
-    
-    <Outer/>
     <ToDoList></ToDoList>
+    <Outer/>
+    
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import YjjHahaha from './components/YjjHahaha.vue'
 import School from './components/School.vue'
 import ToDoList from './components/ToDoList.vue'
 import Outer from './components/fatherSonBrother/Outer.vue'
+import YjjButton from './components/common/YjjButton.vue'
 export default {     
   name: 'App',
   components: {
@@ -23,7 +25,8 @@ export default {
     YjjHahaha,
     School,
     ToDoList,
-    Outer
+    Outer,
+    YjjButton
   },
   data(){
     return{
@@ -33,6 +36,9 @@ export default {
   methods:{
     change(){
       this.age++
+    },
+    dianji(){
+      console.log(2);
     }
   }
 }

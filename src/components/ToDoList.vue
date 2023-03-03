@@ -23,43 +23,55 @@
         :key="data.id"
         class="list-item"
       >
-        <input
-          class="list-item-checkbox"
-          name="item"
-          type="checkbox"
-          v-model="data.isSelect"
-        />
-        <span> {{ data.discribe }}</span>
-        <div
-          @click.stop="onDelect(i)"
-          :class="['list-item-delect', data.isShowDelect ? 'ac' : '']"
-        >
-          删除
+        <div>
+          <input
+            class="list-item-checkbox"
+            name="item"
+            type="checkbox"
+            v-model="data.isSelect"
+          />
+          <span> {{ data.discribe }}</span>
         </div>
+
+        <YjjButton
+          @click.native="onDelect"
+          title="删除"
+          type="danger"
+        ></YjjButton>
       </div>
     </div>
     <div class="divide"></div>
     <div class="list-footer">
-      <div class="selectAll" @click="onSelectAll">
-        <input
-          class="list-item-checkbox"
-          type="checkbox"
-          v-model="isSelectAll"
-        />全选
+      <div>
+        <div class="selectAll" @click="onSelectAll">
+          <input
+            class="list-item-checkbox"
+            type="checkbox"
+            v-model="isSelectAll"
+          />全选
+        </div>
+        <span
+          >已选{{ listData | filterSelect }} | 一共{{ listData.length }}</span
+        >
       </div>
-      <span>已选{{ listData | filterSelect }} | 一共{{ listData.length }}</span>
-      <div @click="onDelect" class="list-item-delect ac">删除所选的内容</div>
+      <!-- <div @click="onDelect" class="list-item-delect ac">删除所选的内容</div> -->
+      <YjjButton
+        @click.native="onDelect"
+        title="删除所选的内容"
+        type="danger"
+      ></YjjButton>
     </div>
   </div>
 </template>
 
 <script>
 import Empty from "./Empty.vue";
+import YjjButton from "./common/YjjButton.vue";
+
 export default {
   name: "ToDoList",
-  components: { Empty },
+  components: { Empty, YjjButton },
   mounted() {
-    console.log(window.localStorage);
     this.listData = JSON.parse(window.localStorage.getItem("listData"));
     this.newItem = window.localStorage.getItem("newItem");
     this.isSelectAll =
@@ -98,7 +110,6 @@ export default {
       this.seeIsSelcetAll();
     },
     setStorge() {
-      console.log(1111);
       window.localStorage.setItem("listData", JSON.stringify(this.listData));
       window.localStorage.setItem("newItem", this.newItem);
       window.localStorage.setItem("isSelectAll", this.isSelectAll);
@@ -162,26 +173,11 @@ export default {
 .font-18 {
   font-size: 18px;
 }
-.list-item-delect {
-  opacity: 0;
-  min-width: 50px;
-  height: 30px;
-  padding: 0 10px;
-  position: absolute;
-  right: 10px;
-  background-color: rgb(231, 68, 68);
-  border-radius: 5px;
-  color: rgb(255, 255, 255);
-  text-align: center;
-  line-height: 30px;
-  transition: all 0.2s;
-}
-.list-item-delect.ac {
-  opacity: 1;
-}
-.list-item-delect:hover {
-  background-color: rgb(121, 22, 22);
-}
+
+// .list-item-button.ac {
+//   opacity: 1;
+// }
+
 .list-item-checkbox {
   width: 20px;
   height: 20px;
@@ -219,6 +215,7 @@ export default {
       height: 40px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       margin: 5px auto;
       transition: all 0.8s;
       position: relative;
@@ -230,7 +227,7 @@ export default {
   .list-footer {
     width: 700px;
     position: relative;
-
+    justify-content: space-between;
     display: flex;
     align-items: center;
     padding-bottom: 20px;
