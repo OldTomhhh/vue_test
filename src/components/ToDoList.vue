@@ -58,6 +58,18 @@ import Empty from "./Empty.vue";
 export default {
   name: "ToDoList",
   components: { Empty },
+  mounted(){
+      console.log(window.localStorage);
+      this.listData = JSON.parse(window.localStorage.getItem('listData'))
+      this.newItem = window.localStorage.getItem('newItem')
+      this.isSelectAll = window.localStorage.getItem('isSelectAll')==="false"?false:true
+
+  },
+  updated(){
+      window.localStorage.setItem('listData',JSON.stringify(this.listData))
+      window.localStorage.setItem('newItem',this.newItem)
+      window.localStorage.setItem('isSelectAll',this.isSelectAll)
+  },
   data() {
     return {
       newItem: "",
@@ -96,6 +108,7 @@ export default {
           id: Math.random(),
         });
         this.newItem = "";
+         this.seeIsSelcetAll();
       }
     },
     onDelect(i) {
