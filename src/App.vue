@@ -4,6 +4,9 @@
     <YjjHahaha/>
     <School :age="age"/>
     <button @click="change">改变</button>
+    <ToDoList></ToDoList>
+    
+    
   </div>
 </template>
 
@@ -11,13 +14,15 @@
 import HelloWorld from './components/HelloWorld.vue'
 import YjjHahaha from './components/YjjHahaha.vue'
 import School from './components/School.vue'
+import ToDoList from './components/ToDoList.vue'
 
 export default {     
   name: 'App',
   components: {
     HelloWorld,
     YjjHahaha,
-    School
+    School,
+    ToDoList
   },
   data(){
     return{
@@ -33,12 +38,12 @@ export default {
 </script>
 
 <style>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
+} */
 </style>
