@@ -4,9 +4,9 @@
     <YjjHahaha/>
     <School :age="age"/>
     <button @click="change">改变</button>
+    
+    <Outer/>
     <ToDoList></ToDoList>
-    
-    
   </div>
 </template>
 
@@ -15,14 +15,15 @@ import HelloWorld from './components/HelloWorld.vue'
 import YjjHahaha from './components/YjjHahaha.vue'
 import School from './components/School.vue'
 import ToDoList from './components/ToDoList.vue'
-
+import Outer from './components/fatherSonBrother/Outer.vue'
 export default {     
   name: 'App',
   components: {
     HelloWorld,
     YjjHahaha,
     School,
-    ToDoList
+    ToDoList,
+    Outer
   },
   data(){
     return{

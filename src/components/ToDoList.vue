@@ -58,18 +58,17 @@ import Empty from "./Empty.vue";
 export default {
   name: "ToDoList",
   components: { Empty },
-  mounted(){
-      console.log(window.localStorage);
-      this.listData = JSON.parse(window.localStorage.getItem('listData'))
-      this.newItem = window.localStorage.getItem('newItem')
-      this.isSelectAll = window.localStorage.getItem('isSelectAll')==="false"?false:true
+  mounted() {
+    console.log(window.localStorage);
+    this.listData = JSON.parse(window.localStorage.getItem("listData"));
+    this.newItem = window.localStorage.getItem("newItem");
+    this.isSelectAll =
+      window.localStorage.getItem("isSelectAll") === "false" ? false : true;
+  },
+  updated() {
+    this.$tool.throttle(this.setStorge, this, 1000);
+  },
 
-  },
-  updated(){
-      window.localStorage.setItem('listData',JSON.stringify(this.listData))
-      window.localStorage.setItem('newItem',this.newItem)
-      window.localStorage.setItem('isSelectAll',this.isSelectAll)
-  },
   data() {
     return {
       newItem: "",
@@ -98,7 +97,12 @@ export default {
       this.listData[i].isSelect = !this.listData[i].isSelect;
       this.seeIsSelcetAll();
     },
-
+    setStorge() {
+      console.log(1111);
+      window.localStorage.setItem("listData", JSON.stringify(this.listData));
+      window.localStorage.setItem("newItem", this.newItem);
+      window.localStorage.setItem("isSelectAll", this.isSelectAll);
+    },
     setNewItem(e) {
       if (e.key === "Enter" && this.newItem != "") {
         this.listData.push({
@@ -108,7 +112,7 @@ export default {
           id: Math.random(),
         });
         this.newItem = "";
-         this.seeIsSelcetAll();
+        this.seeIsSelcetAll();
       }
     },
     onDelect(i) {
@@ -123,10 +127,12 @@ export default {
       this.seeIsSelcetAll();
     },
     onSelectAll() {
-      this.listData = this.listData.map((item) => {
-        return { ...item, isSelect: !this.isSelectAll };
-      });
-      this.isSelectAll = !this.isSelectAll;
+      if (this.listData.length != 0) {
+        this.listData = this.listData.map((item) => {
+          return { ...item, isSelect: !this.isSelectAll };
+        });
+        this.isSelectAll = !this.isSelectAll;
+      }
     },
     seeIsSelcetAll() {
       if (this.listData.length == 0) {
