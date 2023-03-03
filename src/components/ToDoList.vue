@@ -9,7 +9,12 @@
       v-model="newItem"
     />
     <div class="divide"></div>
-    <div class="list-box">
+    <Empty
+      v-if="listData.length == 0"
+      title="暂时没有消息"
+      :height="300"
+    ></Empty>
+    <div v-else class="list-box">
       <div
         @mouseenter="showDelect(i, true)"
         @mouseleave="showDelect(i, false)"
@@ -25,13 +30,23 @@
           v-model="data.isSelect"
         />
         <span> {{ data.discribe }}</span>
-        <div  @click.stop="onDelect(i)" :class="['list-item-delect', data.isShowDelect ? 'ac' : '']">
+        <div
+          @click.stop="onDelect(i)"
+          :class="['list-item-delect', data.isShowDelect ? 'ac' : '']"
+        >
           删除
         </div>
       </div>
     </div>
     <div class="divide"></div>
     <div class="list-footer">
+      <div class="selectAll" @click="onSelectAll">
+        <input
+          class="list-item-checkbox"
+          type="checkbox"
+          v-model="isSelectAll"
+        />全选
+      </div>
       <span>已选{{ listData | filterSelect }} | 一共{{ listData.length }}</span>
       <div @click="onDelect" class="list-item-delect ac">删除所选的内容</div>
     </div>
@@ -39,11 +54,14 @@
 </template>
 
 <script>
+import Empty from "./Empty.vue";
 export default {
   name: "ToDoList",
+  components: { Empty },
   data() {
     return {
       newItem: "",
+      isSelectAll: false,
       listData: [
         {
           discribe: "学习vue相关知识",
@@ -66,7 +84,9 @@ export default {
     },
     select(i) {
       this.listData[i].isSelect = !this.listData[i].isSelect;
+      this.seeIsSelcetAll();
     },
+
     setNewItem(e) {
       if (e.key === "Enter" && this.newItem != "") {
         this.listData.push({
@@ -78,15 +98,32 @@ export default {
         this.newItem = "";
       }
     },
-    onDelect(i){
-        if(typeof i == "number"){
-            this.listData.splice(i,1)
-        }else{
-            this.listData = this.listData.filter((item)=>{
-                return item.isSelect == false
-            })
-        }
-    }
+    onDelect(i) {
+      if (typeof i == "number") {
+        this.listData.splice(i, 1);
+      } else {
+        this.listData = this.listData.filter((item) => {
+          return item.isSelect == false;
+        });
+      }
+
+      this.seeIsSelcetAll();
+    },
+    onSelectAll() {
+      this.listData = this.listData.map((item) => {
+        return { ...item, isSelect: !this.isSelectAll };
+      });
+      this.isSelectAll = !this.isSelectAll;
+    },
+    seeIsSelcetAll() {
+      if (this.listData.length == 0) {
+        this.isSelectAll = false;
+      } else {
+        this.isSelectAll = this.listData.every((el) => {
+          return el.isSelect == true;
+        });
+      }
+    },
   },
   filters: {
     filterSelect(value) {
@@ -126,6 +163,11 @@ export default {
 .list-item-delect:hover {
   background-color: rgb(121, 22, 22);
 }
+.list-item-checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 0 8px;
+}
 .todolist-box {
   width: 700px;
   min-height: 500px;
@@ -161,22 +203,23 @@ export default {
       margin: 5px auto;
       transition: all 0.8s;
       position: relative;
-      .list-item-checkbox {
-        width: 20px;
-        height: 20px;
-        margin: 0 8px;
-      }
     }
     .list-item:hover {
       background: rgb(158, 158, 158);
     }
   }
-  .list-footer{
-      width: 700px;
-      position: relative;
+  .list-footer {
+    width: 700px;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    .selectAll {
       display: flex;
       align-items: center;
-      padding-bottom: 20px;
+      margin-right: 20px;
+    }
   }
 }
 </style>
