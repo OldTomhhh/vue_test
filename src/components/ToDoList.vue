@@ -16,15 +16,16 @@
     ></Empty>
     <div v-else class="list-box">
       <div
-        @mouseenter="showDelect(i, true)"
-        @mouseleave="showDelect(i, false)"
-        @click="select(i)"
+        @mouseenter="()=>{showDelect(i, true)}"
+        @mouseleave="()=>{showDelect(i, false) 
+        onEdit(i,false)}"
         v-for="(data, i) in listData"
         :key="data.id"
         class="list-item"
       >
-        <div>
+        <div class="list-item-checkbox-outer" @click="select(i)">
           <input
+           
             class="list-item-checkbox"
             name="item"
             type="checkbox"
@@ -32,31 +33,46 @@
           />
           <span> {{ data.discribe }}</span>
         </div>
-
-        <YjjButton
-          @click.native="onDelect"
-          title="删除"
-          type="danger"
-        ></YjjButton>
+           
+        <Transition>
+          <div class="buttonBox" v-show="data.isShowDelect">
+         <input
+              ref="editIpt"
+              v-show="data.isEdit"
+              class="todolist-ipt2 font-18"
+              placeholder="输入修改名称，按回车确认"
+              type="text"
+              @keydown="onEditIpt($event,i)"
+              v-model="editContent"
+        />
+            <YjjButton
+              @clicks="onEdit(i,true)"
+              title="编辑"
+              type="default"
+            ></YjjButton>
+            <YjjButton
+              @clicks="onDelect(i)"
+              title="删除"
+              type="danger"
+            ></YjjButton>
+          </div>
+        </Transition>
       </div>
     </div>
     <div class="divide"></div>
     <div class="list-footer">
-      <div>
-        <div class="selectAll" @click="onSelectAll">
-          <input
-            class="list-item-checkbox"
-            type="checkbox"
-            v-model="isSelectAll"
-          />全选
-        </div>
+      <div class="selectAll" @click="onSelectAll">
+        <input
+          class="list-item-checkbox"
+          type="checkbox"
+          v-model="isSelectAll"
+        />全选
         <span
           >已选{{ listData | filterSelect }} | 一共{{ listData.length }}</span
         >
       </div>
-      <!-- <div @click="onDelect" class="list-item-delect ac">删除所选的内容</div> -->
       <YjjButton
-        @click.native="onDelect"
+        @clicks="onDelect"
         title="删除所选的内容"
         type="danger"
       ></YjjButton>
@@ -85,17 +101,20 @@ export default {
     return {
       newItem: "",
       isSelectAll: false,
+      editContent:"",
       listData: [
         {
           discribe: "学习vue相关知识",
           isShowDelect: false,
           isSelect: false,
+          isEdit:false,
           id: 78126387162873,
         },
         {
           discribe: "吃一个大苹果",
           isShowDelect: false,
           isSelect: false,
+          isEdit:false,
           id: 9283497293847923,
         },
       ],
@@ -120,6 +139,7 @@ export default {
           discribe: this.newItem,
           isShowDelect: false,
           isSelect: false,
+          isEdit:false,
           id: Math.random(),
         });
         this.newItem = "";
@@ -154,6 +174,25 @@ export default {
         });
       }
     },
+    onEdit(i,bool) {
+       this.listData[i].isEdit = bool
+      if(bool){
+        this.$nextTick(()=>{
+          this.$refs.editIpt[i].focus()
+        })
+      }else{
+        this.editContent = ''
+      }
+     
+    },
+    onEditIpt(e,i){
+      
+
+      if(e.key === 'Enter' && this.editContent!=""){
+        this.listData[i].discribe = this.editContent
+        this.editContent = ""
+      }
+    }
   },
   filters: {
     filterSelect(value) {
@@ -173,10 +212,26 @@ export default {
 .font-18 {
   font-size: 18px;
 }
+@keyframes moves {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
-// .list-item-button.ac {
-//   opacity: 1;
-// }
+.v-enter-active {
+  animation: moves 0.2s;
+}
+.v-leave-active {
+  animation: moves 0.2s reverse;
+}
 
 .list-item-checkbox {
   width: 20px;
@@ -197,12 +252,21 @@ export default {
     background-color: rgb(182, 182, 182);
     margin: 10px 0;
   }
-  .todolist-ipt {
+    .todolist-ipt {
     display: block;
     border-radius: 5px;
     height: 30px;
     margin: 0px auto;
     width: 680px;
+    padding: 6px !important;
+    border: none;
+  }
+  .todolist-ipt2 {
+    display: block;
+    border-radius: 5px;
+    height: 20px;
+    margin: 0px auto;
+    width: 300px;
     padding: 6px !important;
     border: none;
   }
@@ -219,9 +283,18 @@ export default {
       margin: 5px auto;
       transition: all 0.8s;
       position: relative;
+      .buttonBox {
+        display: flex;
+        align-items: center;
+      }
     }
     .list-item:hover {
       background: rgb(158, 158, 158);
+    }
+    .list-item-checkbox-outer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
     }
   }
   .list-footer {
@@ -232,8 +305,10 @@ export default {
     align-items: center;
     padding-bottom: 20px;
     .selectAll {
+      width: 200px;
       display: flex;
       align-items: center;
+      justify-content: flex-start;
       margin-right: 20px;
     }
   }

@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     onClick(){
-      this.$emit('tap')
+      this.$emit('clicks')
     }
   },
   filters: {},
@@ -44,6 +44,7 @@ export default {
 
 <style lang="less" scoped>
 .list-item-button {
+  display: inline-block;
   min-width: 50px;
   padding: 0 10px;
   height: 40px;
