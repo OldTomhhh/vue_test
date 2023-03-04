@@ -34,7 +34,7 @@
           <span> {{ data.discribe }}</span>
         </div>
            
-        <Transition>
+        <Transition appear>
           <div class="buttonBox" v-show="data.isShowDelect">
          <input
               ref="editIpt"
