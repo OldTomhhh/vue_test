@@ -16,16 +16,23 @@
     ></Empty>
     <div v-else class="list-box">
       <div
-        @mouseenter="()=>{showDelect(i, true)}"
-        @mouseleave="()=>{showDelect(i, false) 
-        onEdit(i,false)}"
+        @mouseenter="
+          () => {
+            showDelect(i, true);
+          }
+        "
+        @mouseleave="
+          () => {
+            showDelect(i, false);
+            onEdit(i, false);
+          }
+        "
         v-for="(data, i) in listData"
         :key="data.id"
         class="list-item"
       >
         <div class="list-item-checkbox-outer" @click="select(i)">
           <input
-           
             class="list-item-checkbox"
             name="item"
             type="checkbox"
@@ -33,20 +40,20 @@
           />
           <span> {{ data.discribe }}</span>
         </div>
-           
+
         <Transition appear>
           <div class="buttonBox" v-show="data.isShowDelect">
-         <input
+            <input
               ref="editIpt"
               v-show="data.isEdit"
               class="todolist-ipt2 font-18"
               placeholder="输入修改名称，按回车确认"
               type="text"
-              @keydown="onEditIpt($event,i)"
+              @keydown="onEditIpt($event, i)"
               v-model="editContent"
-        />
+            />
             <YjjButton
-              @clicks="onEdit(i,true)"
+              @clicks="onEdit(i, true)"
               title="编辑"
               type="default"
             ></YjjButton>
@@ -88,10 +95,15 @@ export default {
   name: "ToDoList",
   components: { Empty, YjjButton },
   mounted() {
-    this.listData = JSON.parse(window.localStorage.getItem("listData"));
-    this.newItem = window.localStorage.getItem("newItem");
-    this.isSelectAll =
-      window.localStorage.getItem("isSelectAll") === "false" ? false : true;
+    console.log(window.localStorage.getItem("listData"));
+    this.listData = JSON.parse(window.localStorage.getItem("listData"))||[];
+    this.newItem = window.localStorage.getItem("newItem") || '';
+    let boolString = window.localStorage.getItem("isSelectAll") 
+    if(boolString === "false"|| boolString === "true"){
+      this.isSelectAll=boolString=="false"?false:true
+    }else{
+      this.isSelectAll = false
+    }
   },
   updated() {
     this.$tool.throttle(this.setStorge, this, 1000);
@@ -101,23 +113,8 @@ export default {
     return {
       newItem: "",
       isSelectAll: false,
-      editContent:"",
-      listData: [
-        {
-          discribe: "学习vue相关知识",
-          isShowDelect: false,
-          isSelect: false,
-          isEdit:false,
-          id: 78126387162873,
-        },
-        {
-          discribe: "吃一个大苹果",
-          isShowDelect: false,
-          isSelect: false,
-          isEdit:false,
-          id: 9283497293847923,
-        },
-      ],
+      editContent: "",
+      listData: [],
     };
   },
   methods: {
@@ -139,7 +136,7 @@ export default {
           discribe: this.newItem,
           isShowDelect: false,
           isSelect: false,
-          isEdit:false,
+          isEdit: false,
           id: Math.random(),
         });
         this.newItem = "";
@@ -174,25 +171,22 @@ export default {
         });
       }
     },
-    onEdit(i,bool) {
-       this.listData[i].isEdit = bool
-      if(bool){
-        this.$nextTick(()=>{
-          this.$refs.editIpt[i].focus()
-        })
-      }else{
-        this.editContent = ''
+    onEdit(i, bool) {
+      this.listData[i].isEdit = bool;
+      if (bool) {
+        this.$nextTick(() => {
+          this.$refs.editIpt[i].focus();
+        });
+      } else {
+        this.editContent = "";
       }
-     
     },
-    onEditIpt(e,i){
-      
-
-      if(e.key === 'Enter' && this.editContent!=""){
-        this.listData[i].discribe = this.editContent
-        this.editContent = ""
+    onEditIpt(e, i) {
+      if (e.key === "Enter" && this.editContent != "") {
+        this.listData[i].discribe = this.editContent;
+        this.editContent = "";
       }
-    }
+    },
   },
   filters: {
     filterSelect(value) {
@@ -252,7 +246,7 @@ export default {
     background-color: rgb(182, 182, 182);
     margin: 10px 0;
   }
-    .todolist-ipt {
+  .todolist-ipt {
     display: block;
     border-radius: 5px;
     height: 30px;

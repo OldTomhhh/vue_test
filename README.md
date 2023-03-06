@@ -1,24 +1,6 @@
-# lanbai_website
+启动项目
+npm run dev
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
@@ -56,7 +38,7 @@ $emit是触发组件的自定义事件，组件绑定原生事件用.native修�
     1.nginx服务代理（不会）
     2.vue-cil开服务代理（正解）
 
-引入全局第三方css可以写在index.html中
+引入全局第三方css可以写在index.html中，html中，最好使用用<%= BASE_URL %>（这个是vue配置的基础url）
 
 
 

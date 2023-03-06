@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    <input type="text" v-model="searchname"><button @click="goSearch">搜索</button>
-    <UserList :data='listData'/>
+  
+    <input type="text" v-model="searchname" /><button @click="goSearch">
+      搜索
+    </button>
+    <UserList :data="listData" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <YjjHahaha />
     <School :age="age" />
     <button @click="change">改变</button>
     <ToDoList></ToDoList>
     <Outer />
-    
-
   </div>
 </template>
 
@@ -20,9 +21,9 @@ import School from "./components/School.vue";
 import ToDoList from "./components/ToDoList.vue";
 import Outer from "./components/fatherSonBrother/Outer.vue";
 import YjjButton from "./components/common/YjjButton.vue";
+import Loading from "./components/common/Loading.vue";
+
 import UserList from "./components/UserList.vue";
-
-
 
 export default {
   name: "App",
@@ -33,30 +34,37 @@ export default {
     ToDoList,
     Outer,
     YjjButton,
-    UserList
+    UserList,
+    Loading,
   },
-  mounted() {
-      
-  },
+  mounted() {},
   data() {
     return {
       age: 18,
-      listData:[],
-      searchname:""
+      listData: [],
+      searchname: "",
     };
   },
   methods: {
     change() {
       this.age++;
     },
+    dianji() {
+      console.log(222222)
+    },
     goSearch() {
-      this.listData=[]
-       this.$http
-        .get("http://localhost:8080/api/search/users?q="+this.searchname)
-        .then((res) => {
-          console.log(res.data.items);
-          this.listData = res.data.items
-        })
+      this.listData = [];
+      this.$http
+        .get("http://localhost:8090/api/search/users?q=" + this.searchname)
+        .then(
+          (res) => {
+            console.log(res.data.items);
+            this.listData = res.data.items;
+          },
+          (err) => {
+            console.error(err);
+          }
+        );
     },
   },
 };

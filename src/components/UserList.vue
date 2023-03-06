@@ -1,8 +1,11 @@
 <template>
   <div class="listBox">
       <div v-for="item in data" :key="item.id" class="listItemBox">
-           <div class="listItem" >{{item.login}}</div>
+        <a :href="item.html_url">
+            <div class="listItem" >{{item.login}}</div>
            <img class="avater" :src="item.avatar_url" alt="">
+        </a>
+          
       </div>
     
        <Empty
@@ -32,7 +35,7 @@ export default {
     width: 100%;
     max-height: 500px;
     overflow-y: scroll;
-    
+    background-color: #d8d8d8;
     // display: flex;
     // justify-content: space-evenly;
     .listItemBox{
