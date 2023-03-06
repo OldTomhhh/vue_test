@@ -55,7 +55,7 @@ export default {
     goSearch() {
       this.listData = [];
       this.$http
-        .get("http://localhost:8090/api/search/users?q=" + this.searchname)
+        .get("http://localhost:4090/api/search/users?q=" + this.searchname)
         .then(
           (res) => {
             console.log(res.data.items);
