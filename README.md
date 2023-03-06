@@ -40,7 +40,7 @@ $emit是触发组件的自定义事件，组件绑定原生事件用.native修�
 
 引入全局第三方css可以写在index.html中，html中，最好使用用<%= BASE_URL %>（这个是vue配置的基础url）
 
-
+修改命令启动开发服务可修改端口配置，在pakege.json中的对应命令后加   --port 端口号
 
 
 
