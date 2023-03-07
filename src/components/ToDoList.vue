@@ -95,7 +95,7 @@ export default {
   name: "ToDoList",
   components: { Empty, YjjButton },
   mounted() {
-    console.log(window.localStorage.getItem("listData"));
+    
     this.listData = JSON.parse(window.localStorage.getItem("listData"))||[];
     this.newItem = window.localStorage.getItem("newItem") || '';
     let boolString = window.localStorage.getItem("isSelectAll") 

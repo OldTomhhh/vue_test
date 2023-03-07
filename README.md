@@ -1,5 +1,5 @@
 启动项目
-npm run dev
+npm run dev 本项目服务器端口为4090
 
 
 ### Customize configuration
@@ -41,6 +41,19 @@ $emit是触发组件的自定义事件，组件绑定原生事件用.native修�
 引入全局第三方css可以写在index.html中，html中，最好使用用<%= BASE_URL %>（这个是vue配置的基础url）
 
 修改命令启动开发服务可修改端口配置，在pakege.json中的对应命令后加   --port 端口号
+
+作用域插槽
+
+vuex
+1、vue执行js文件的时候，import语句会汇聚在最开始，就早执行然后在顺着后面代码执行,这就是为什么在store中使用Vue.use(Vuex)，否则会报”必须在vuex使用之后才可以创建store实例
+2、vuex中核心属性有actions，mutations，state。state是存储数据的地方，mutations中的函数会真实的改变state的数据，mutations中的函数命名规范为全为大写，actions通过dispatch触发，action中的函数会收到2个参数，第一个是上下文，第二个是value，action中的函数使用commit触发mutations中的函数，这一步看上去有些多余，实际上有一些业务逻辑可以写在action中，比如一些异步操作，当没有这样需求时可以直接commit触发mutations中的函数改变state的数据。
+3、getters，getter相当于vuex里面的computed的，当我们获取vuex中state的属性时，我们也许会有一些其他的操作，比如把这个值经过一系列运算之后得到，那么可以配置在getter中，用法与computed一样需要return一个结果出来
+4、mapState以及mapGetter，在组件里面使用vuex会比较麻烦，所有的地方都得加上$store.state。。。以及$store.getter。。。比较冗余和麻烦，如果要解决这个问题，可以使用些个computed来把名字重写，但是数据多了也会发现写computed挺烦的，所以有了mapState和mapGetter这两个函数帮助程序员写computed属性简化代码
+5、同样可以使用mapAction以及mapMutition来生成操作action和mutition的methods
+6、由于可能纯在大量的不通模块对于state的操作，所以可以用vuex模块化的方式管理
+
+
+
 
 
 

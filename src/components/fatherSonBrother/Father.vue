@@ -36,7 +36,7 @@ export default {
         this.sonddata = value
     },
     goBrother(){
-        console.log( this.number1);
+        
         this.$bus.$emit('sendTofather',this.number1)
     }
   },

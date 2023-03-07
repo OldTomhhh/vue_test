@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-  
-    <input type="text" v-model="searchname" /><button @click="goSearch">
+    <AAAAAAA/>
+    <input @keydown.enter="goSearch" type="text" v-model="searchname" /><button @click="goSearch">
       搜索
     </button>
     <UserList :data="listData" />
@@ -11,6 +11,7 @@
     <button @click="change">改变</button>
     <ToDoList></ToDoList>
     <Outer />
+    <img src="./assets/logo.png" alt="">
   </div>
 </template>
 
@@ -22,8 +23,8 @@ import ToDoList from "./components/ToDoList.vue";
 import Outer from "./components/fatherSonBrother/Outer.vue";
 import YjjButton from "./components/common/YjjButton.vue";
 import Loading from "./components/common/Loading.vue";
-
 import UserList from "./components/UserList.vue";
+import AAAAAAA from "./components/vuexText/AAAAAA.vue"
 
 export default {
   name: "App",
@@ -36,6 +37,7 @@ export default {
     YjjButton,
     UserList,
     Loading,
+    AAAAAAA
   },
   mounted() {},
   data() {
@@ -53,6 +55,7 @@ export default {
       console.log(222222)
     },
     goSearch() {
+      if(this.searchname === '')return false
       this.listData = [];
       this.$http
         .get("http://localhost:4090/api/search/users?q=" + this.searchname)

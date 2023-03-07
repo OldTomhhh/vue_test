@@ -24,7 +24,7 @@ export default {
     },
     methods:{
         showDoom(){
-            console.log(this.$refs.title);
+            
         },
         showName(){
             alert(this.name)
@@ -37,7 +37,7 @@ export default {
     },
     watch:{
         age(n,o){
-            console.log(n,o);
+            
         }
     },
     filters:{
