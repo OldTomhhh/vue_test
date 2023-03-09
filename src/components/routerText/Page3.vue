@@ -1,12 +1,12 @@
 <template>
     <div>
-        
+        Page3 ==== {{key}}
     </div>
 </template>
 
 <script>
 export default {
-    name: 'BBBBBB',
+    name: 'Page1',
 
     data() {
         return {
@@ -17,7 +17,11 @@ export default {
     mounted() {
         
     },
-
+    computed:{
+        key(){
+            return this.$route.params.key
+        }
+    },
     methods: {
         
     },

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <RouterDemo/>
     <AAAAAAA/>
     <input @keydown.enter="goSearch" type="text" v-model="searchname" /><button @click="goSearch">
       搜索
@@ -25,7 +26,9 @@ import YjjButton from "./components/common/YjjButton.vue";
 import Loading from "./components/common/Loading.vue";
 import UserList from "./components/UserList.vue";
 import AAAAAAA from "./components/vuexText/AAAAAA.vue"
+import RouterDemo from "./components/routerText/RouterDemo.vue"
 
+RouterDemo
 export default {
   name: "App",
   components: {
@@ -37,7 +40,8 @@ export default {
     YjjButton,
     UserList,
     Loading,
-    AAAAAAA
+    AAAAAAA,
+    RouterDemo
   },
   mounted() {},
   data() {
