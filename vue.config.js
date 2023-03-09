@@ -1,7 +1,5 @@
-// const { defineConfig } = require('@vue/cli-service')
-// module.exports = defineConfig({
-//   transpileDependencies: true
-// })
+
+console.log("环境变量为：",process.env.VUE_APP_SERVER_URL);
 module.exports = {
   pages: {
     index: {

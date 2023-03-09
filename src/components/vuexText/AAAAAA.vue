@@ -34,12 +34,11 @@ export default {
     ...mapState({ school: "school", name: "name", subject: "subject" }),
     // 写法2
     // ...mapState([ "school","name","subject"]),
-
   },
   methods: {
     change(char) {
       this.number += char;
-      var a = 2
+      var a = 2;
     },
     change() {
       this.$store.dispatch("changeKey", Math.random());

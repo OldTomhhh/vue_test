@@ -58,7 +58,7 @@ export default {
       if(this.searchname === '')return false
       this.listData = [];
       this.$http
-        .get("http://localhost:4090/api/search/users?q=" + this.searchname)
+        .get("/api/search/users?q=" + this.searchname)
         .then(
           (res) => {
             console.log(res.data.items);

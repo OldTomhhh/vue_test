@@ -50,7 +50,7 @@ vuex
 3、getters，getter相当于vuex里面的computed的，当我们获取vuex中state的属性时，我们也许会有一些其他的操作，比如把这个值经过一系列运算之后得到，那么可以配置在getter中，用法与computed一样需要return一个结果出来
 4、mapState以及mapGetter，在组件里面使用vuex会比较麻烦，所有的地方都得加上$store.state。。。以及$store.getter。。。比较冗余和麻烦，如果要解决这个问题，可以使用些个computed来把名字重写，但是数据多了也会发现写computed挺烦的，所以有了mapState和mapGetter这两个函数帮助程序员写computed属性简化代码
 5、同样可以使用mapAction以及mapMutition来生成操作action和mutition的methods
-6、由于可能纯在大量的不通模块对于state的操作，所以可以用vuex模块化的方式管理
+6、由于可能存在大量的不通模块对于state的操作，所以可以用vuex模块化的方式管理
 
 
 

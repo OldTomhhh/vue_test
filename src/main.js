@@ -3,6 +3,7 @@ import App from "./App.vue";
 import plugns from "./plugns";
 import http from "./http";
 import store from "./store/index";
+
 Vue.config.productionTip = false;
 Vue.use(plugns); //使用自定义插件
 Vue.use(http); //使用自定义插件
